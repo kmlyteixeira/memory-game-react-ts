@@ -1,24 +1,35 @@
 import { useQuery } from '@apollo/client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import INFO_CHARACTER from './querys';
 import client from './services';
-import { Container, Item, List, TitlePage, Image} from './styled';
+import { Container, Item, List, TitlePage, Image, Header } from './styled';
 
 function App() {
 
-  const { data } = useQuery(INFO_CHARACTER, {client: client});
+  const [characters, setCharacters] = useState([]);
+
+  const { data } = useQuery(INFO_CHARACTER, { client: client });
+
+  useEffect(() => {
+    if (data) {
+      setCharacters(data.characters.results);
+    }
+  }, [data]);
 
   return (
-    <Container>
-      <TitlePage>Memory Game</TitlePage>
-      {data.characters.results.map((character: any) => (
-        <List key={character.id}>
-          <Item>
-            <Image src={character.image} alt={character.name} />
-          </Item>
-        </List>
-      ))}
-    </Container>
+    <>
+      <Header>
+        <TitlePage>Memory Game</TitlePage>
+      </Header><Container>
+        {characters.map((character: any) => (
+          <List key={character.id}>
+            <Item>
+              <Image src={character.image} alt={character.name} />
+            </Item>
+          </List>
+        ))}
+      </Container>
+    </>
   );
 }
 
