@@ -17,22 +17,45 @@ function App() {
     setResult(params);
   }
 
-  const [characters, setCharacters] = useState([]);
-  const [doubleCharacters, setDoubleCharacters] = useState([]);
-  const [result, setResult] = useState([]);
+  const [characters, setCharacters] = useState<any>([]);
+  const [result, setResult] = useState<any>([]);
 
   const { data } = useQuery(INFO_CHARACTER, { variables: { ListIds: [1, 2, 3, 4, 5, 14, 15, 20, 18, 17] } });
 
   useEffect(() => {
-      setCharacters(data.charactersByIds);
-  }, [data]);
+    const fetchData = async () => {
+      const result = await data;
+      return result;
+    }
+
+    const char = fetchData()
+    char.then((res) => {
+      setCharacters(res.charactersByIds);
+    });
+  }, []);
 
   useEffect(() => {
-    setDoubleCharacters([...characters, ...characters]);
-    Shuffle(doubleCharacters);
+    if (characters) {
+      Shuffle([...characters, ...characters]);
+    }
   }, [characters]);
 
-  console.log(characters);
+  const cards = new Array(20);
+  var temp = 0;
+
+  for (let i = 0; i < 20; i++) {
+    temp = temp + 1;
+    cards[i] = { id: temp, image: 'https://rickandmortyapi.com/api/character/avatar/19.jpeg' };
+
+    if (temp == 10) {
+      temp = 0;
+    }
+  }
+
+  const handleClick = (id: any) => {
+    cards[id - 1].image = result[id - 1].image;
+    /*console.log("Imagem de id: " + id + " foi alterada");*/
+  }
 
   return (
     <Container>
@@ -40,10 +63,10 @@ function App() {
         <TitlePage>Memory Game</TitlePage>
       </Header>
       <Card>
-        {result.map((character: any) => (
+        {cards.map((character: any) => (
           <List key={character.id}>
             <Item>
-              <Image src={character.image} alt={character.name} />
+              <Image id= {character.id} onClick={handleClick} src={character.image} alt={character.name} />
             </Item>
           </List>
         ))}

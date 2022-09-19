@@ -53,6 +53,7 @@ export const Image = styled.img `
     width: 100px;
     border-radius: 5px;
     box-shadow: 0 0 10px #477385;
+    cursor: pointer;
 `;
 
 export const Header = styled.div `
@@ -61,7 +62,7 @@ export const Header = styled.div `
 `;
 
 export const Footer = styled.div `
-    background-color: white;
+    background-image: linear-gradient(to left, #00b4cb, #e5d29f);
     text-align: center;
     padding: 10px;
     font-size: 13px;
