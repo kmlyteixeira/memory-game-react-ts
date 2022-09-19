@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import INFO_CHARACTER from './querys';
 import { Container, Item, List, TitlePage, Image, Header, Card, Footer } from './styled';
 import './App.css';
@@ -32,7 +32,7 @@ function App() {
     char.then((res) => {
       setCharacters(res.charactersByIds);
     });
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (characters) {
@@ -40,30 +40,21 @@ function App() {
     }
   }, [characters]);
 
-  const cards = new Array(20);
-  var temp = 0;
+  const [selected, setSelected] = useState(0);
+  const ref = useRef(null);
 
-  for (let i = 0; i < 20; i++) {
-    temp = temp + 1;
-    cards[i] = { id: temp, image: 'https://rickandmortyapi.com/api/character/avatar/19.jpeg' };
-
-    if (temp == 10) {
-      temp = 0;
-    }
+  const handleClick = (event: any) => {
+    setSelected(event.target.id);
+    console.log(selected); // seguir aqui - pega id do elemnto clicado - criar comparação com o elemento seguinte/anterior
   }
-
-  const handleClick = (id: any) => {
-    cards[id - 1].image = result[id - 1].image;
-    /*console.log("Imagem de id: " + id + " foi alterada");*/
-  }
-
+  
   return (
     <Container>
       <Header>
         <TitlePage>Memory Game</TitlePage>
       </Header>
       <Card>
-        {cards.map((character: any) => (
+        {result.map((character: any) => (
           <List key={character.id}>
             <Item>
               <Image id= {character.id} onClick={handleClick} src={character.image} alt={character.name} />
@@ -73,7 +64,7 @@ function App() {
       </Card>
       <Footer>
         <ul>
-          <li>Reach me On:
+          <li>
             <a href="https://github.com/kmlyteixeira"><img src="../images/github.png"></img></a>
             <a href="https://www.linkedin.com/in/kemily-teixeira/"><img src="../images/linkedin.png"></img></a>
           </li>
