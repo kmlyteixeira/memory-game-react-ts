@@ -41,11 +41,22 @@ function App() {
   }, [characters]);
 
   const [selected, setSelected] = useState(0);
-  const ref = useRef(null);
-
+  
   const handleClick = (event: any) => {
-    setSelected(event.target.id);
-    console.log(selected); // seguir aqui - pega id do elemnto clicado - criar comparação com o elemento seguinte/anterior
+    const newSelected = event.target.id;
+    setSelected(newSelected);
+    
+    if (selected === newSelected) { //test if the same card is clicked twice
+      console.log('acertou');
+      console.log('newSelected: ' + newSelected);
+      console.log('selected: ' + selected);
+      setSelected(0);
+    } else if (selected !== newSelected && selected != 0) {
+      console.log('errou');
+      console.log('newSelected: ' + newSelected);
+      console.log('selected: ' + selected);
+      setSelected(0);
+    }
   }
   
   return (
@@ -54,8 +65,8 @@ function App() {
         <TitlePage>Memory Game</TitlePage>
       </Header>
       <Card>
-        {result.map((character: any) => (
-          <List key={character.id}>
+        {result.map((character: any, index: any) => (
+          <List key={index}>
             <Item>
               <Image id= {character.id} onClick={handleClick} src={character.image} alt={character.name} />
             </Item>
