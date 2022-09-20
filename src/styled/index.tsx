@@ -64,10 +64,7 @@ export const Header = styled.div `
 export const Footer = styled.div `
     background-image: linear-gradient(to left, #00b4cb, #e5d29f);
     text-align: center;
-    padding: 10px;
-    font-size: 13px;
-    font-family: CustomFontTwo;
-    color: black;
+    padding: 5px;
     bottom: 0;
     position: fixed;
     width: 100%;
@@ -79,7 +76,7 @@ export const Footer = styled.div `
             li {
                 list-style: none;
                 img {
-                    width: 10px;
+                    width: 20px;
                     margin-left: 10px;
                 }
             }
