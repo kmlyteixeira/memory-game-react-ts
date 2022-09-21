@@ -40,9 +40,14 @@ function App() {
     }
   }, [characters]);
 
+  const cardBackClassName = ['card-back'];
+  const cardFrontClassName = ['card-front'];
+
   const [selected, setSelected] = useState(0);
   
   const handleClick = (event: any) => {
+    cardBackClassName.push('card-back__flip');  //continue here
+    cardFrontClassName.push('card-front__flip');
     const newSelected = event.target.id;
     setSelected(newSelected);
     
@@ -68,7 +73,8 @@ function App() {
         {result.map((character: any, index: any) => (
           <List key={index}>
             <Item>
-              <Image id= {character.id} onClick={handleClick} src={character.image} alt={character.name} />
+              <div className={cardBackClassName.join(' ')}><Image id= {character.id} onClick={handleClick} src="../images/tag.jpeg" alt={character.name} /></div>
+              <div className={cardFrontClassName.join(' ')}><Image id= {character.id} onClick={handleClick} src={character.image} alt={character.name} /></div>
             </Item>
           </List>
         ))}
