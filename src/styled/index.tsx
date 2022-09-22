@@ -23,22 +23,19 @@ export const TitlePage = styled.h1 `
 `;
 
 export const Container = styled.div `
-    display: flex;
+    display: grid;
     justify-content: center;
+    grid-template-columns: repeat(5, 0fr);
+    grid-template-rows: repeat(5, 0fr);
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(3, 0fr);
+        grid-template-rows: repeat(3, 0fr);
+    }
 `;
 
 export const Card = styled.div `
-    padding: 50px;
-    position: absolute;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    margin-top: 100px;
-
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-    }
+    
 `;
 
 export const List = styled.ul `
@@ -47,6 +44,37 @@ export const List = styled.ul `
 
 export const Item = styled.li `
     list-style: none;
+
+    .card-back {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: #e7e0bd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #e7e0bd;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+
+    .card-front {
+        width: 100px;
+        height: 100px;
+        background: #e7e0bd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #e7e0bd;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+
+    &:hover .card-front__flip {
+        transform: rotateY(180deg);
+    }
+
+    &:hover .card-back__flip {
+        transform: rotateY(180deg);
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+    }
 `;
 
 export const Image = styled.img `
@@ -56,12 +84,14 @@ export const Image = styled.img `
     cursor: pointer;
 `;
 
-export const Header = styled.div `
+export const HeaderPage = styled.div `
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 100px;
 `;
 
-export const Footer = styled.div `
+export const FooterPage = styled.div `
     background-image: linear-gradient(to left, #00b4cb, #e5d29f);
     text-align: center;
     padding: 5px;
